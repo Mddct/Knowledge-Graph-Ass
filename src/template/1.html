@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title></title>
+        <meta charset="utf-8" />
+
+        <script src="https://cdn.bootcss.com/wordcloud2.js/1.1.0/wordcloud2.js "></script>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger+Paint" rel="stylesheet">
+
+        <style type="text/css">
+         *{padding:0px; margin:0px;}
+         /* .bg-search-img{width:100%; height:100%; background-image:url(img/bg21.jpg); margin:0 auto;} */
+         .search-content{margin-bottom:35px; }
+         .search-logo{text-align:center;margin-top:100px;}
+         .search-btn{ margin:0 auto; width:640px; height:40px;margin-top:80px;}
+         .search-text{height:20px; width:521px; padding:9px 7px; border:1px solid #b8b8b8; outline:none; margin-right:0px; float:left;}
+         .search-sub{height:40px; background-color:#38f; border:none;border-top-right-radius:5px;border-bottom-right-radius: 5px; padding:1px; line-height:38px; width:102px;color:white; font-size:16px;margin:0px; float:left;}
+
+        </style>
+    </head>
+    <body>
+        <div class="search-content">
+            <div class="search-logo">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                     width="245.000000pt" height="83.000000pt" viewBox="0 0 245.000000 83.000000"
+                     preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,83.000000) scale(0.100000,-0.100000)"
+                       fill="#000000" stroke="none">
+                        <path d="M1867 721 c-7 -27 23 -41 88 -41 71 0 75 -4 75 -76 l0 -64 -100 0
+                                 -100 0 0 25 c0 24 3 25 55 25 52 0 55 1 55 25 0 24 -3 25 -55 25 -48 0 -55 3
+                                 -55 19 0 35 -12 51 -36 51 l-25 0 3 -101 c3 -114 3 -114 81 -124 31 -4 47 -11
+                                 47 -21 0 -11 -17 -14 -80 -14 l-80 0 0 -30 0 -30 188 2 187 3 0 25 c0 24 -2
+                                 25 -77 28 -57 2 -78 6 -78 16 0 9 20 16 59 20 44 5 61 11 65 24 11 40 18 210
+                                 8 216 -6 3 -57 9 -115 12 -101 7 -104 6 -110 -15z"/>
+                        <path d="M1170 701 c0 -16 -3 -42 -6 -59 -6 -28 -10 -31 -48 -34 -36 -3 -41
+                                 -6 -44 -30 -3 -27 -2 -28 42 -28 l46 0 0 -44 0 -45 -42 -3 c-38 -3 -43 -6 -43
+                                 -28 0 -22 5 -25 43 -28 l42 -3 0 -50 0 -49 -52 0 c-103 0 -98 -8 -98 156 l0
+                                 144 -29 0 c-17 0 -31 -6 -35 -16 -12 -30 -7 -322 6 -330 6 -4 56 -9 111 -12
+                                 l99 -5 -7 -73 -7 -72 59 -8 c32 -4 87 -8 123 -8 63 -1 65 0 68 26 3 23 -1 28
+                                 -30 32 -18 3 -55 7 -83 8 l-50 3 -3 48 -3 47 83 0 c110 0 156 13 164 47 10 38
+                                 -2 303 -14 315 -5 5 -58 12 -116 15 l-106 6 0 53 0 54 -35 0 c-32 0 -35 -3
+                                 -35 -29z m234 -203 c3 -29 6 -83 6 -119 0 -78 -1 -79 -112 -79 l-68 0 0 50 0
+                                 50 60 0 c57 0 60 1 60 24 0 28 -16 36 -71 36 l-39 0 0 45 0 45 79 0 78 0 7
+                                 -52z"/>
+                        <path d="M457 713 c-4 -3 -4 -62 -1 -130 l7 -123 -44 0 c-52 0 -72 11 -63 33
+                                 4 11 18 17 39 17 30 0 45 13 45 41 0 5 -18 12 -41 15 -36 6 -40 9 -35 30 4 16
+                                 1 26 -11 33 -16 9 -15 10 7 11 14 0 35 3 48 6 20 6 22 11 17 33 -4 14 -8 27
+                                 -10 29 -1 1 -38 -3 -81 -10 -78 -13 -79 -14 -79 -43 0 -26 3 -30 25 -27 l25 3
+                                 -9 -106 c-5 -58 -7 -107 -4 -110 3 -3 42 -8 86 -12 79 -6 81 -7 87 -34 5 -24
+                                 12 -29 36 -29 24 0 29 4 29 25 0 24 2 25 69 25 l69 0 6 63 c16 186 16 188 -8
+                                 197 -13 4 -45 10 -72 11 -47 3 -49 2 -52 -24 -3 -24 0 -27 38 -33 51 -8 53
+                                 -37 2 -42 -26 -3 -32 -8 -32 -27 0 -18 7 -25 30 -30 23 -5 30 -12 30 -31 0
+                                 -21 -4 -24 -40 -24 l-40 0 0 58 c0 33 -3 93 -6 135 -7 75 -8 77 -34 77 -15 0
+                                 -30 -3 -33 -7z"/>
+                        <path d="M103 633 c-8 -3 -13 -24 -13 -53 l0 -49 -36 -3 c-75 -6 -68 -68 7
+                                 -68 l39 0 0 -60 c0 -59 -1 -60 -27 -60 -37 0 -56 -13 -51 -36 2 -14 13 -20 45
+                                 -22 l42 -3 7 -60 c6 -55 9 -60 28 -55 11 3 25 6 29 6 4 0 7 26 5 58 -3 56 -2
+                                 57 27 67 43 14 42 49 -2 53 -31 3 -33 6 -33 42 0 21 -3 45 -6 54 -5 13 1 16
+                                 29 16 50 0 67 9 67 36 0 20 -6 24 -49 30 -53 7 -61 17 -61 82 0 32 -13 39 -47
+                                 25z"/>
+                        <path d="M2251 590 c-89 -35 -96 -41 -82 -68 10 -18 15 -19 48 -10 21 5 64 21
+                                 96 35 47 21 57 30 55 47 -4 31 -33 30 -117 -4z"/>
+                        <path d="M2275 419 c-49 -12 -59 -21 -51 -47 6 -18 10 -19 89 -6 45 8 83 14
+                                 85 14 2 0 2 10 0 23 -2 18 -10 22 -43 24 -22 1 -58 -3 -80 -8z"/>
+                        <path d="M1900 340 c0 -18 14 -24 90 -33 8 -1 16 -15 18 -31 l4 -29 -48 7
+                                 c-26 3 -57 6 -70 6 -22 0 -24 4 -24 45 0 41 -2 45 -24 45 -20 0 -25 -6 -31
+                                 -40 -4 -22 -4 -53 0 -69 6 -27 11 -30 58 -38 51 -8 52 -9 55 -46 2 -26 -1 -39
+                                 -12 -43 -9 -3 -16 -15 -16 -25 0 -16 8 -19 44 -19 25 0 47 3 49 8 2 4 1 33 -2
+                                 65 l-7 57 27 0 c54 0 59 7 59 80 0 80 -1 80 -101 80 -62 0 -69 -2 -69 -20z"/>
+                        <path d="M338 324 c-11 -3 -18 -15 -18 -30 0 -24 1 -24 93 -24 108 0 125 -7
+                                 107 -41 -7 -13 -14 -25 -15 -27 -1 -1 -28 7 -60 18 -61 21 -68 19 -79 -17 -6
+                                 -19 0 -24 46 -41 52 -20 58 -29 43 -64 -4 -11 0 -20 16 -28 23 -13 26 -12 54
+                                 34 9 15 14 15 63 1 30 -9 55 -15 57 -13 2 2 6 15 10 29 6 25 3 28 -37 41 -49
+                                 17 -49 21 -17 95 13 29 20 55 17 58 -7 8 -259 15 -280 9z"/>
+                        <path d="M2278 231 c-79 -20 -82 -22 -73 -51 6 -20 12 -22 55 -16 26 4 71 13
+                                 99 22 43 13 51 18 51 39 0 22 -4 25 -32 24 -18 0 -63 -8 -100 -18z"/>
+                        <path d="M1787 163 c-43 -30 -44 -34 -17 -58 19 -17 21 -17 55 9 40 31 42 37
+                                 17 59 -17 15 -21 15 -55 -10z"/>
+                        <path d="M2056 177 c-15 -11 -17 -17 -7 -35 18 -33 45 -44 67 -27 18 13 18 15
+                                 -11 45 -27 27 -33 29 -49 17z"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="search-btn">
+                <form action="search", method="get">
+                    <input type="text" style="font-size:18px" class="search-text" />
+                    <input type="submit" class="search-sub" value="搜一下" />
+                </form>
+            </div>
+
+
+        </div>
+
+
+
+        <div id="canvas-container" align="center">
+            <canvas id="canvas" width="640px" height="100px" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+        </div>
+
+
+    </body>
+  </html>
+  <script>
+   var options = eval({
+       "list": [['傻猎豹', 10], ['不如', 9], ['麻花疼', 7], ['麻云', 6],['李眼红', 4], ['雷布斯', 5],['周红衣', 4],['刘墙洞', 3],['李国情', 3]],
+       "gridSize": 3,
+       "weightFactor": 6,
+       "color": 'random-dark',
+       "backgroundColor": '#fff',
+       "rotateRatio": 0,
+       "fontFamily": 'Times, serif',
+
+       fontFamily: 'Finger Paint, cursive, sans-serif',
+       "hover": window.drawbox,
+       /* hover: function(item){ */
+       /* alert (item) */
+       /* }, */
+       "click": function(item) {
+           alert(item[0] + ': ' + item[1]);
+       },
+
+
+   });
+   var canvas = document.getElementById('canvas');
+   WordCloud(canvas, options);
+  </script>
+
+
