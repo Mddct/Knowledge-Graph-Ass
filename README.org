@@ -1,5 +1,5 @@
 * knowledge grpah 作业
 ** 
 [[file:src/static/img/demo.png]]
-[[file:src/static/img/demo.jpg]]
+[[file:src/static/img/demo1.jpg]]
 
