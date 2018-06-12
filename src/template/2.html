@@ -1,30 +1,24 @@
-<!DOCTYPE html>
+{{define "temp"}}
+<!doctype html>
+
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title></title>
         <meta charset="utf-8" />
-
-        <script src="https://cdn.bootcss.com/wordcloud2.js/1.1.0/wordcloud2.js "></script>
-
-        <link href="https://fonts.googleapis.com/css?family=Finger+Paint" rel="stylesheet">
-
         <style type="text/css">
          *{padding:0px; margin:0px;}
-         /* .bg-search-img{width:100%; height:100%; background-image:url(img/bg21.jpg); margin:0 auto;} */
-         .search-content{margin-bottom:35px; }
-         .search-logo{text-align:center;margin-top:100px;}
-         .search-btn{ margin:0 auto; width:640px; height:40px;margin-top:80px;}
-         .search-text{height:20px; width:521px; padding:9px 7px; border:1px solid #b8b8b8; outline:none; margin-right:0px; float:left;}
-         .search-sub{height:40px; background-color:#38f; border:none;border-top-right-radius:5px;border-bottom-right-radius: 5px; padding:1px; line-height:38px; width:102px;color:white; font-size:16px;margin:0px; float:left;}
-
+         .s_form{height:61px;}
+         .search-btn{ margin:0 auto; float:left;width: 60%;}
+         .search-text{height:20px; width:100%; padding:9px 7px; border:1px solid #b8b8b8; outline:none; margin-right:0px; float:left; margin-top:20px; margin-left:10px}
+         .search-sub{height:40px; background-color:#38f; border:none;border-top-right-radius:5px;border-bottom-right-radius: 5px; padding:1px; line-height:38px; width:102px;color:white; font-size:16px;margin:0px; float:left; margin-top:20px;}
+         .item-box{height: 100px; margin-top:5px;}
         </style>
     </head>
+
     <body>
-        <div class="search-content">
-            <div class="search-logo">
-                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                     width="245.000000pt" height="83.000000pt" viewBox="0 0 245.000000 83.000000"
+        <div class="s_form">
+            <div class="search-logo" style="width:10%">
+                <svg style="margin-left:5px ; float:left" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                     width="100px" height="80px" viewBox="0 0 245.000000 83.000000"
                      preserveAspectRatio="xMidYMid meet">
 
                     <g transform="translate(0.000000,83.000000) scale(0.100000,-0.100000)"
@@ -83,50 +77,49 @@
                                  -11 45 -27 27 -33 29 -49 17z"/>
                     </g>
                 </svg>
-            </div>
 
+            </div>
             <div class="search-btn">
                 <form action="search", method="get">
-                    <input type="text" style="font-size:18px" name="q" class="search-text" />
-                    <input type="submit" class="search-sub" value="搜一下" />
+                    <div style="width:80%; float:left">
+                        <input type="text" style="font-size:18px" name="q" class="search-text" />
+                    </div>
+                    <div style="width:20%; float:left">
+                        <input type="submit" class="search-sub" value="搜一下" />
+                    </div>
                 </form>
             </div>
-
-
+        </div>
+        <div class="bew-blank" style="background-color:	#ccc; height:35px; width:100%; opacity:0.3;">
+            <div style="padding-top:4px">
+                为您找到：{{.TotalCount}}
+            </div>
         </div>
 
+        <div id ="content-card" style ="margin-left:12%; width:631px; float:left">
+            {{range .Items}}
+            <div class="item-box">
+                <div style="margin-bottom:3px">
+                    <a href="{{.Link}}">12e32e2e23er32</a>
+                </div>
+                <img alt="" src="asset/img/bg1.jpg" style="height:75px; width:121px; float:left" />
+                <div style="margin-left:4px; height:40px; width:397px; float:left">
+                    
+                    <p style="word-wrap:break-word;">
+                        {{.Description | lessWorlds}}
+                    </p> 
+                    
+                </div>
 
-
-        <div id="canvas-container" align="center">
-            <canvas id="canvas" width="640px" height="100px" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+            </div>
+            {{end}}
         </div>
+        <div id="recommend-card " style="width:250px; padding-left:20px; float:right; height:600px;">
+            <p>推荐：👋 </p>
 
-
+            <img alt="" src="asset/img/bg1.jpg" style="height:175px; width:121px; float:left" />
+        </div>
     </body>
-  </html>
-  <script>
-   var options = eval({
-       "list": [['傻猎豹', 10], ['不如', 9], ['麻花疼', 7], ['麻云', 6],['李眼红', 4], ['雷布斯', 5],['周红衣', 4],['刘墙洞', 3],['李国情', 3]],
-       "gridSize": 3,
-       "weightFactor": 6,
-       "color": 'random-dark',
-       "backgroundColor": '#fff',
-       "rotateRatio": 0,
-       "fontFamily": 'Times, serif',
 
-       fontFamily: 'Finger Paint, cursive, sans-serif',
-       "hover": window.drawbox,
-       /* hover: function(item){ */
-       /* alert (item) */
-       /* }, */
-       "click": function(item) {
-           alert(item[0] + ': ' + item[1]);
-       },
-
-
-   });
-   var canvas = document.getElementById('canvas');
-   WordCloud(canvas, options);
-  </script>
-
-
+</html>
+{{end}}
