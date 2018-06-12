@@ -2,4 +2,4 @@
 知识图谱作业
 
 ## demo 
-![image][src/static/img/demo.png]
+![image]["src/static/img/demo.png"]
