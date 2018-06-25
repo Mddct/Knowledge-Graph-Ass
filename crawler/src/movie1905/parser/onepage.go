@@ -9,8 +9,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-const movieBasePath = "http://www.1905.com"
-
 var movieRe = regexp.MustCompile(`<a target="_blank" title="([^"]+)" href="(/mdb/film/[0-9]+/)">[^<]+</a>`)
 var year = 2018
 
@@ -27,10 +25,10 @@ func ParseMovieOnePage(contents []byte) types.ParseResult {
 		result.Requests = append(
 			result.Requests,
 			types.Request{
-				Url: movieBasePath + string(m[2]),
+				Url: movieBasePath + link,
 				ParseFunc: func(bytes []byte) types.ParseResult {
 					return ParseProfile(
-						bytes, name, movieBasePath+link)
+						bytes, name, link)
 				},
 			})
 
