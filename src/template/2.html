@@ -96,19 +96,24 @@
             </div>
         </div>
 
-        <div id ="content-card" style ="margin-left:12%; width:631px; float:left">
+        <div id ="content-card" style ="height:auto; margin-left:12%; width:631px; float:left">
+
             {{range .Items}}
+            <br>
+            <br>
             <div class="item-box">
                 <div style="margin-bottom:3px">
-                    <a href="{{.Link}}">12e32e2e23er32</a>
+                    <a href="{{.Link}}">{{.Name}}</a>
                 </div>
-                <img alt="" src="asset/img/bg1.jpg" style="height:75px; width:121px; float:left" />
+                <img alt="" src="{{.Thumbnail}}" style="height:121px; width:auto; float:left" />
                 <div style="margin-left:4px; height:40px; width:397px; float:left">
                     
-                    <p style="word-wrap:break-word;">
+                    <p style="word-wrap:break-word; color:gray ">
                         {{.Description | lessWorlds}}
                     </p> 
-                    
+                    <br/>
+                    <p style="font-size:small; color:gray">{{.Countrys}}               {{.Year}}</p>
+                    <br/>
                 </div>
 
             </div>
