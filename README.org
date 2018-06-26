@@ -4,7 +4,72 @@
    [[file:src/static/img/demo1.jpg]]
    [[file:src/static/img/demo2.jpg]]
 
-** nlp to sparql (或者三元组)
+** 系统说明文档
+*** 数据存储与查询
+    - 全文搜索引擎 elasticsearch
+    - jena
+    - dbpedia Dataset
+    - 爬虫爬取 电影网1905 5万条数据
+*** 说明
+    - 由于考虑在线查询sparql速度慢，系统响应时间过长，考虑将dbpedia Dataset导入本地jena中，使用本地endpoint方式
+    - 由于时间关系，缩小出版物集合重点放在电影部分，当然同时也支持基于名字的对书籍和游戏的查询和全文检索
+*** 设计思路
+    0 elasticsearch 中建立 3个index 分别是movie book game (movie 中id采用电影网的编号)。
+    1 由于sparql的regex匹配速度较慢，响应时间过长，采用把出版物的id和name存入到elasticsearch中，
+    2 获取搜索内容，先在elasticsearch 中全文检索，得到得分最高的5条记录，这5条记录作为备选去查询jena。
+    3 该五条记录id对应的name，构造sparql发起查询
+    #+BEGIN_SRC go
+      sparql = fmt.Sprintf(`PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+          PREFIX dbo: <http://dbpedia.org/ontology/>
+          PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+          PREFIX dct: <http://purl.org/dc/terms/>
+
+      select ?link ?name ?countrys ?abstract ?year ?thumbnail
+      where{
+      ?link rdf:type dbo:Film;
+             rdfs:label ?name;
+             dbp:country ?countrys;
+            rdfs:comment ?abstract;
+            dbo:runtime ?year
+      filter regex(?name,"%s")
+      filter(LANG(?abstract)="zh" ).
+      optional {
+      ?link dbo:thumbnail ?thumbnail
+      }`, %s)
+
+    #+END_SRC
+    4 推荐栏目采用ES中的相似度得分 和 共享类别最多的电影 共享类型最多的电影
+    #+BEGIN_SRC go
+
+      categoryMost=  `SELECT COUNT(?movie) SAMPLE(?movie)
+            WHERE
+            {
+              ?name rdf:type dbo:film
+              ?name dct:subject ?o .
+                rdfs:label ?name;
+              dbp:country ?countrys;
+              rdfs:comment ?abstract;
+              dbo:runtime ?year
+
+              ?movie dct:subject ?o
+              FILTER (?movie != dbr:?name) .
+            } GROUP BY ?movie
+            ORDER BY DESC(COUNT(?movie))
+            limit 5`
+      type = `SELECT COUNT(?movie) SAMPLE(?movie)
+              WHERE
+              {
+                dbr:A_Trip_to_the_Moon rdf:type ?o .
+                ?movie rdf:type ?o
+                FILTER (?movie != dbr:A_Trip_to_the_Moon) .
+              } GROUP BY ?movie
+              ORDER BY DESC(COUNT(?movie))
+       lim5`
+
+    #+END_SRC
+    5 渲染网页，返回结果。
+
+** 参考 nlp to sparql (或者三元组)
    1 语义解析
    参考
    https://nlp.stanford.edu/pubs/semparseEMNLP13.pdf
@@ -14,46 +79,46 @@
    https://github.com/IeuanWalker/Dissertation-Project
    2
 
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+   PREFIX owl: <http://www.w3.org/2002/07/owl#>
+   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+   PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+   PREFIX dc: <http://purl.org/dc/elements/1.1/>
+   PREFIX : <http://dbpedia.org/resource/>
+   PREFIX dbpedia2: <http://dbpedia.org/property/>
+   PREFIX dbpedia: <http://dbpedia.org/>
+   PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-select ?movieLink ?title ?genreLink ?genre ?releaseDate  where{
-?movieLink rdf:type db:Film;
-foaf:name ?title .
-optional {
-?movieLink dbpedia2:genre ?genreLink.
-?genreLink rdfs:label ?genre.
-filter(lang(?genre)='en')
-}.
-optional{
-?movieLink <http://dbpedia.org/ontology/releaseDate> ?releaseDate
-}.
-{0}{1}
-filter(lang(?title)='en')
-} 
+   select ?movieLink ?title ?genreLink ?genre ?releaseDate  where{
+   ?movieLink rdf:type db:Film;
+   foaf:name ?title .
+   optional {
+   ?movieLink dbpedia2:genre ?genreLink.
+   ?genreLink rdfs:label ?genre.
+   filter(lang(?genre)='en')
+   }.
+   optional{
+   ?movieLink <http://dbpedia.org/ontology/releaseDate> ?releaseDate
+   }.
+   {0}{1}
+   filter(lang(?title)='en')
+   }
 
-@prefix dt:   <http://example.org/datatype#> .
-@prefix ns:   <http://example.org/ns#> .
-@prefix :     <http://example.org/ns#> .
-@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+   @prefix dt:   <http://example.org/datatype#> .
+   @prefix ns:   <http://example.org/ns#> .
+   @prefix :     <http://example.org/ns#> .
+   @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
-:x   ns:p     "cat"@en .
-:y   ns:p     "42"^^xsd:integer .
-:z   ns:p     "abc"^^dt:specialDatatype .
+   :x   ns:p     "cat"@en .
+   :y   ns:p     "42"^^xsd:integer .
+   :z   ns:p     "abc"^^dt:specialDatatype .
 
-@prefix dc:   <http://purl.org/dc/elements/1.1/> .
-@prefix :     <http://example.org/book/> .
-@prefix ns:   <http://example.org/ns#> .
+   @prefix dc:   <http://purl.org/dc/elements/1.1/> .
+   @prefix :     <http://example.org/book/> .
+   @prefix ns:   <http://example.org/ns#> .
 
-:book1  dc:title  "SPARQL Tutorial" .
-:book1  ns:price  42 .
-:book2  dc:title  "The Semantic Web" .
-:book2  ns:price  23 .
+   :book1  dc:title  "SPARQL Tutorial" .
+   :book1  ns:price  42 .
+   :book2  dc:title  "The Semantic Web" .
+   :book2  ns:price  23 .

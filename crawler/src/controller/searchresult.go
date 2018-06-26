@@ -44,7 +44,15 @@ func CreateSearchResultHandle(
 func (s *SearchResultHandler) ServeHTTP(
 	w http.ResponseWriter, r *http.Request) {
 
-	q := strings.TrimSpace(r.FormValue("q"))
+	// ommit error
+	r.ParseForm()
+	kgs := r.Form.Get("kg")
+	if kgs != "" {
+		kgr := &KgSearchResult{kgs}
+		kgr.ServeHTTP(w, r)
+		return
+	}
+	q := strings.TrimSpace(r.Form.Get("q"))
 	from, err := strconv.Atoi(
 		r.FormValue("from"),
 	)

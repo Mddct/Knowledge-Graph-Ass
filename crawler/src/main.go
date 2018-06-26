@@ -14,10 +14,12 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	io.Copy(w, homePage)
 }
 func main() {
+
 	http.Handle("/search",
 		controller.
 			CreateSearchResultHandle("view/template/2.html"),
 	)
+
 	http.HandleFunc("/", HomePage)
 	log.Println(http.ListenAndServe(":8080", nil))
 }

@@ -53,9 +53,9 @@ WHERE
 	}
 }`
 
-func getResult(name string) []*model.Profile {
+func GetResult(name string) []*model.Profile {
 	const DbpediaPath = "https://dbpedia.org/sparql"
-	qstring := fmt.Sprintf(boolPatern, name)
+	qstring := fmt.Sprintf(moviePattern, name)
 
 	repo, _ := sparql.NewRepo(DbpediaPath)
 	res, err := repo.Query(qstring)
