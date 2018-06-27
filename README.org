@@ -15,9 +15,9 @@
     - 推荐功能比较弱，只实现了同种类型查询下的根据名字及查询类型共享最多类型类别的推荐
     - 局限：部分中文在dbpedia中查询不到， 推荐功能太弱， 日后要改进
 *** 设计思路
-    0. elasticsearch 中建立 3个index 分别是movie book game (movie 中id采用电影网的编号)。
-    1. 由于sparql的regex匹配速度较慢，响应时间过长，采用把出版物的id和name存入到elasticsearch中，
-    2. 获取搜索内容,由ES中全文检索和dbpedia的sparql中构成
+    - elasticsearch 中建立 3个index 分别是movie book game (movie 中id采用电影网的编号)。
+    - 由于sparql的regex匹配速度较慢，响应时间过长，采用把出版物的id和name存入到elasticsearch中，
+    - 获取搜索内容,由ES中全文检索和dbpedia的sparql中构成
     #+BEGIN_SRC go
       sparql = fmt.Sprintf(`PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
           PREFIX dbo: <http://dbpedia.org/ontology/>
@@ -38,7 +38,7 @@
       }`, %s)
 
     #+END_SRC
-    3. 每个页面由左边基于内容查找和右端知识卡片，知识卡片由dbpedia中相应推荐填充
+    - 每个页面由左边基于内容查找和右端知识卡片，知识卡片由dbpedia中相应推荐填充
     #+BEGIN_SRC go
 
       categoryMost=  `SELECT COUNT(?movie) SAMPLE(?movie)
@@ -67,7 +67,7 @@
        lim5`
 
     #+END_SRC
-    4. 渲染网页，返回结果。
+    - 渲染网页，返回结果。
 
     注意：
     - 本文爬虫属于并发，架构如下，支撑elasticsearch和dbpedia中查询结果内容的部分补充
@@ -77,7 +77,7 @@
 *** 使用说明：
     #+BEGIN_SRC go 
       cd crawler/src/
-        go run main.go
+      go run main.go
     #+END_SRC
     #+BEGIN_SRC go
       for i := range ret {
