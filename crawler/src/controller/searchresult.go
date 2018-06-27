@@ -88,15 +88,15 @@ func (s *SearchResultHandler) ServeHTTP(
 	pageRe, err := nr.data, nr.err
 
 	if err == nil {
-		if len(pageRe) > 0 {
-			if len(page.Items) > 0 {
-				page.Items[0] = pageRe[0]
-			} else {
-				page.Items = pageRe
-				pageRe = nil
-			}
+		// if len(pageRe) > 0 {
+		// 	// if len(page.Items) > 0 {
+		// 	// 	page.Items[0] = pageRe[0]
+		// 	// } else {
+		// 		page.Items = pageRe
+		// 		pageRe = nil
+		// }
 
-		}
+		// }
 		page.RecommendItems = pageRe
 	}
 
