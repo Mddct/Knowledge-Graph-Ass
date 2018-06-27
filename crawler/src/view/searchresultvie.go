@@ -58,9 +58,16 @@ func CreateSearchResultView(filename string) *SearchResultView {
 
 func (s *SearchResultView) Render(
 	w io.Writer, data *model.SearchResult) error {
+
+	var leftR []*model.Profile
+	if len(data.RecommendItems) > 1 {
+		leftR = data.RecommendItems[1:]
+	} else {
+		leftR = data.RecommendItems
+	}
 	return s.template.Execute(w, map[string]interface{}{
 		"data":      data,
-		"recommend": data.Items[1 : len(data.Items)-1],
+		"recommend": leftR,
 	})
 
 }

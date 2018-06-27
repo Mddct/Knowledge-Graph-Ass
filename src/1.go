@@ -223,16 +223,5 @@ optional {
 		ret = append(ret, mi)
 	}
 
-	// // fmt.Println(res.Solutions())
-	// url := url.Values{}
-	// url.Set("format", "json")
-	// url.Set("query", qstring)
-
-	// res, err := http.Get(DbpediaPath + "?" + url.Encode())
-	// if err != nil {
-	//	panic(err)
-	// }
-	// defer res.Body.Close()
-	// io.Copy(os.Stdout, res.Body)
 	return ret
 }

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"knowledgegraph"
 	"model"
 	"net/http"
 	"reflect"
@@ -46,12 +47,7 @@ func (s *SearchResultHandler) ServeHTTP(
 
 	// ommit error
 	r.ParseForm()
-	kgs := r.Form.Get("kg")
-	if kgs != "" {
-		kgr := &KgSearchResult{kgs}
-		kgr.ServeHTTP(w, r)
-		return
-	}
+
 	q := strings.TrimSpace(r.Form.Get("q"))
 	from, err := strconv.Atoi(
 		r.FormValue("from"),
@@ -60,10 +56,48 @@ func (s *SearchResultHandler) ServeHTTP(
 		from = 0
 	}
 
-	page, err := s.getSearchResult(q, from)
+	type baseChan struct {
+		data *model.SearchResult
+		err  error
+	}
+	type recommendChan struct {
+		data []*model.Profile
+		err  error
+	}
+	bc := make(chan baseChan)
+	re := make(chan recommendChan)
+	go func() {
+		defer close(bc)
+		page, err := s.getSearchResult(q, from)
+		bc <- baseChan{page, err}
+	}()
+	go func() {
+		defer close(re)
+		rec, err := knowledgegraph.GetResult(q,
+			knowledgegraph.SearchMovieRecommend)
+		re <- recommendChan{rec, err}
+	}()
+
+	b := <-bc
+	nr := <-re
+	page, err := b.data, b.err
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	pageRe, err := nr.data, nr.err
+
+	if err == nil {
+		if len(pageRe) > 0 {
+			if len(page.Items) > 0 {
+				page.Items[0] = pageRe[0]
+			} else {
+				page.Items = pageRe
+				pageRe = nil
+			}
+
+		}
+		page.RecommendItems = pageRe
 	}
 
 	err = s.view.Render(w, page)
