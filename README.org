@@ -3,6 +3,7 @@
    | 周  | 杨  | 李  |
    | 1/3 | 1/3 | 1/3 |
 ** 系统说明文档
+*** 搜索系统使用MVC golang + ES + dbpedia sparql
 *** 数据存储与查询
     - 全文搜索引擎 elasticsearch
     - jena
@@ -11,7 +12,7 @@
 *** 说明
     - 由于时间关系，缩小出版物集合重点放在电影部分，当然同时也支持基于名字的对书籍和游戏的查询和全文检索
     - 推荐功能比较弱，只实现了同种类型查询下的根据名字及查询类型共享最多类型类别的推荐
-    - 局限：部分中文在dbpedia中查询不到
+    - 局限：部分中文在dbpedia中查询不到， 推荐功能太弱， 日后要改进
 *** 设计思路
     0. elasticsearch 中建立 3个index 分别是movie book game (movie 中id采用电影网的编号)。
     1. 由于sparql的regex匹配速度较慢，响应时间过长，采用把出版物的id和name存入到elasticsearch中，
@@ -71,7 +72,7 @@
     - 本文爬虫属于并发，架构如下，支撑elasticsearch和dbpedia中查询结果内容的部分补充
       比如dbpedia中电影海报，可自定义解析器，本文爬虫爬取豆瓣电影 书籍 的封面。
     - ES查询 sparql查询并发 缩短响应时间
-    [[file:crawler/并发板.PNG]]
+    [[file:crawler/并发版.PNG]]
 *** 使用说明：
     #+BEGIN_SRC go
       cd crawler/src/
@@ -102,10 +103,11 @@
 
     #+END_SRC
 
+    [[file:src/static/img/demo0.jpg]]
     [[file:src/static/img/demo.png]]
     [[file:src/static/img/demo1.jpg]]
     [[file:src/static/img/demo2.jpg]]
-
+    
 ** 总结
 
    项目最有特色的功能是什么，能让用户获得什么好处？
