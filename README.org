@@ -10,6 +10,7 @@
     - dbpedia Dataset
     - 爬虫爬取 电影网1905 5万条数据
 *** 说明
+    - 推荐代码位于 crawel/knowledgegraph下
     - 由于时间关系，缩小出版物集合重点放在电影部分，当然同时也支持基于名字的对书籍和游戏的查询和全文检索
     - 推荐功能比较弱，只实现了同种类型查询下的根据名字及查询类型共享最多类型类别的推荐
     - 局限：部分中文在dbpedia中查询不到， 推荐功能太弱， 日后要改进
@@ -74,7 +75,7 @@
     - ES查询 sparql查询并发 缩短响应时间
     [[file:crawler/并发版.PNG]]
 *** 使用说明：
-    #+BEGIN_SRC go
+    #+BEGIN_SRC go 
       cd crawler/src/
         go run main.go
     #+END_SRC
